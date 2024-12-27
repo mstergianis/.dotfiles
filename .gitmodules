@@ -1,0 +1,3 @@
+[submodule ".config/waybar/themes/catppuccin"]
+	path = .config/waybar/themes/catppuccin
+	url = git@github.com:catppuccin/waybar.git

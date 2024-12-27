@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =9
+let g:netrw_dirhist_9='/home/michael/workspace/devconsole/tdc-octant/tests/acceptance'
+let g:netrw_dirhist_8='/home/michael/workspace/devconsole/tdc-octant/tests/acceptance/util'
+let g:netrw_dirhist_7='/home/michael/FasterMelee-5.9/bin/Sys/Wii/shared2/succession'
+let g:netrw_dirhist_6='/home/michael/workspace/olympus/tmc-pipeline/spoke-pipeline-definitions'
+let g:netrw_dirhist_5='/mnt/stretchvol1/videos/tv-shows/Malcolm in the Middle/S06'
+let g:netrw_dirhist_4='/home/michael/workspace/devconsole/olympus-ui/client/src/components/OlympusLabelsForm'
+let g:netrw_dirhist_3='/home/michael/workspace/devconsole/hackathon-tdc-component/src'
+let g:netrw_dirhist_2='/home/michael/workspace/pivotal/cf-mgmt-redlands/config/mike-test-org/mike-test-space'
+let g:netrw_dirhist_1='/home/michael/workspace/pivotal/cf-mgmt-redlands/config/mike-test-org'
+let g:netrw_dirhist_0='/home/michael/workspace/devconsole/devconsole-ui/scripts'
