@@ -250,6 +250,7 @@ bass source "$HOME/.config/google-cloud-sdk/completion.bash.inc"
 if status --is-interactive
     alias dotfiles '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
     abbr -ag dot dotfiles
+    abbr -ag ds 'dotfiles st'
 end
 
 if test -z $DISPLAY && test (tty) = /dev/tty1
