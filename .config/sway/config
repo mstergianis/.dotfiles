@@ -340,7 +340,7 @@ bindsym $mod+b exec --no-startup-id "emacsclient -c -a emacs"
 exec_always --no-startup-id picom --config ~/.config/i3/picom.conf
 
 # floating gnome-calculator
-for_window [class="gnome-calculator"] floating enable
+for_window [app_id="org.gnome.Calculator"] floating enable
 
 bindsym $mod+F1 exec --no-startup-id nvidia-screen-tearing-fix && autorandr -l pc-wide && nitrogen --restore
 bindsym $mod+F2 exec --no-startup-id autorandr -l docked-2-display && nitrogen --restore
