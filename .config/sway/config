@@ -258,7 +258,7 @@ bindsym $mod+p mode "resize"
 #    }
 #}
 
-output * bg "/home/michael/Pictures/backgrounds/1336966.jpeg" fill
+output * bg "/home/michael/Pictures/backgrounds/pexels-arnie-chou-304906-1229042.jpg" fill
 
 bindsym $mod+Shift+c exec ssh-add -D && loginctl lock-session && swayidle -w \
     timeout 1 'swaymsg "output * dpms off"' \
