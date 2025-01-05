@@ -52,6 +52,7 @@ window#waybar.hidden {
 }
 
 #memory,
+#language,
 #custom-power,
 #battery,
 #backlight,
@@ -61,26 +62,31 @@ window#waybar.hidden {
 #tray {
   border-radius: 4px;
   margin: 6px 3px;
-  padding: 6px 12px;
-  background-color: #1e1e2e;
-  color: #181825;
+  padding: 6px 8px;
+  background-color: @base;
+  color: @mantle;
 }
 
 #custom-power {
   margin-right: 6px;
 }
 
+@define-color arch #1793d1;
 #custom-logo {
-  padding-right: 7px;
-  padding-left: 7px;
+  padding-right: 9px;
+  padding-left: 9px;
   margin-left: 5px;
   font-size: 22px;
   border-radius: 8px 0px 0px 8px;
-  color: #1793d1;
+  color: @arch;
 }
 
 #memory {
   background-color: #fab387;
+}
+
+#language {
+  background-color: @lavender;
 }
 
 #battery {

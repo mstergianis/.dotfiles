@@ -13,10 +13,11 @@ set $mod Mod4
 set $term alacritty
 set $editor vim
 
-input * {
-  xkb_layout "us"
-  xkb_variant "dvorak"
-  xkb_options "caps:swapescape"
+input type:keyboard {
+  xkb_numlock enabled
+  xkb_layout "us,us"
+  xkb_variant "dvorak,"
+  xkb_options "caps:swapescape,grp:win_space_toggle"
 }
 
 

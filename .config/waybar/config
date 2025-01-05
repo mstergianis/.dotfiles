@@ -12,6 +12,7 @@
     ],
     "modules-right": [
         "tray",
+        "sway/language",
         "memory",
         "network",
         "wireplumber",
@@ -25,6 +26,9 @@
         "icon-theme": "WhiteSur",
         "icon-size": 25,
         "tooltip-format": "{title}"
+    },
+    "sway/language": {
+	"format": " {long} ",
     },
     "sway/workspaces": {
         "on-click": "activate",
@@ -53,7 +57,7 @@
     },
     "memory": {
         "interval": 5,
-        "format": "󰍛 {}%",
+        "format": " 󰍛 {}% ",
         "max-length": 10
     },
     "tray": {
@@ -66,10 +70,10 @@
     },
     "network": {
         "format-wifi" : "{icon}",
-        "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
-        "format-ethernet": "󰀂",
-	"format-alt" : "󱛇",
-        "format-disconnected" : "󰖪",
+        "format-icons": [" 󰤯 "," 󰤟 "," 󰤢 "," 󰤥 "," 󰤨 "],
+        "format-ethernet": " 󰀂 ",
+	"format-alt" : " 󱛇 ",
+        "format-disconnected" : " 󰖪 ",
 	"tooltip-format-wifi": "{icon} {essid}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
         "tooltip-format-ethernet": "󰀂  {ifname}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
 	"tooltip-format-disconnected": "Disconnected",
@@ -80,13 +84,13 @@
     },
     "wireplumber": {
         "format": "{icon}",
-        "format-bluetooth": "󰂰",
+        "format-bluetooth": " 󰂰 ",
         "nospacing": 1,
         "tooltip-format": "Volume : {volume}%",
-        "format-muted": "󰝟",
+        "format-muted": " 󰝟 ",
         "format-icons": {
-            "headphone": "",
-            "default": ["󰖀","󰕾",""]
+            "headphone": "  ",
+            "default": [" 󰖀 "," 󰕾 ","   "]
         },
         "on-click": "pamixer -t",
         "scroll-step": 1
@@ -133,7 +137,7 @@
         "tooltip": false
     },
     "custom/power": {
-        "format": "󰤆",
+        "format": " 󰤆 ",
         "tooltip": false,
         "on-click": "~/.config/rofi/powermenu/type-2/powermenu.sh &"
     }
