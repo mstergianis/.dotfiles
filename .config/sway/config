@@ -111,7 +111,7 @@ bindsym $mod+Return exec $term
 # kill focused window
 bindsym $mod+Shift+apostrophe kill
 
-bindsym $mod+e exec rofi -show run
+bindsym $mod+e exec rofi -show drun
 bindsym $mod+TAB exec rofi -show window
 
 # focus follows mouse
