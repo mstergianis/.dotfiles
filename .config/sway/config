@@ -343,8 +343,9 @@ exec_always --no-startup-id picom --config ~/.config/i3/picom.conf
 # floating gnome-calculator
 for_window [app_id="org.gnome.Calculator"] floating enable
 
-bindsym $mod+F1 exec --no-startup-id nvidia-screen-tearing-fix && autorandr -l pc-wide && nitrogen --restore
-bindsym $mod+F2 exec --no-startup-id autorandr -l docked-2-display && nitrogen --restore
+bindsym $mod+F1 exec brightness 0
+bindsym $mod+F2 exec brightness 35
+
 bindsym $mod+F3 exec --no-startup-id key-reset
 
 exec dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY
