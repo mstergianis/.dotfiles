@@ -1,0 +1,106 @@
+[init]
+	defaultBranch = main
+[user]
+	name = Michael Stergianis
+	email = michaelstergianis@gmail.com
+	signingkey = 47026274F515D7B3
+[core]
+	excludesfile = /home/michael/.gitignore
+[pager]
+	diff = delta
+	log = delta
+	reflog = delta
+	show = delta
+[color]
+	ui = true
+# [color "diff-highlight"]
+# 	oldNormal = red bold
+# 	oldHighlight = red bold 52
+# 	newNormal = green bold
+# 	newHighlight = green bold 22
+# [color "diff"]
+# 	meta = 11
+# 	frag = magenta bold
+# 	commit = yellow bold
+# 	old = red bold
+# 	new = green bold
+# 	whitespace = red reverse
+# 	func = 146 bold
+[pull]
+	ff = only
+[url "git@gitlab.eng.vmware.com:"]
+	insteadof = https://gitlab.eng.vmware.com/
+	insteadOf = https://gitlab.eng.vmware.com
+	insteadOf = https://gitlab.eng.vmware.com
+[alias]
+	sh = show --show-signature
+	co = checkout
+	sw = switch
+	cp = cherry-pick
+	cpc = cherry-pick --continue
+	d = diff
+	ci = commit -v
+	st = status
+	br = branch
+	dc = diff --cached
+	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p
+	lp = log -1 -p
+        lol = log --graph --decorate --pretty=oneline --abbrev-commit
+        lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	rl = remote -v
+	rs = restore
+	rss = restore --staged
+	rc = rebase --continue
+	ra = rebase --abort
+	poh = push -u origin HEAD
+	pf = push --force-with-lease
+	ap = add -p
+	recent-branches = ! git branch --sort=-committerdate | head -n 10
+	bl = blame -w -C -C -C
+	previous-commit-message = log -1 --pretty=%B
+
+[interactive]
+	diffFilter = delta --color-only --features=interactive
+[delta]
+	features = decorations
+	syntax-theme = gruvbox-dark
+	line-numbers = true
+	side-by-side = true
+	plus-style = syntax "#003800"
+	minus-style = syntax "#3f0001"
+[delta "interactive"]
+	keep-plus-minus-markers = false
+	line-numbers = true
+	syntax-theme = Dracula
+	side-by-side = true
+[delta "decorations"]
+	commit-decoration-style = blue ol
+	commit-style = raw
+	file-style = omit
+	hunk-header-decoration-style = blue box
+	hunk-header-file-style = red
+	hunk-header-line-number-style = "#067a00"
+	hunk-header-style = file line-number syntax
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[rerere]
+	enabled = true
+[commit]
+	gpgsign = true
+[format]
+	signOff = false
+[diff]
+	algorithm = minimal
+[duet "env"]
+	git-author-initials = ms
+	git-author-name = Michael Stergianis
+	git-author-email = michaelstergianis@gmail.com
+	mtime = 1736278065
+	git-committer-initials = 
+	git-committer-name = 
+	git-committer-email = 
