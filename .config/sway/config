@@ -19,7 +19,7 @@ input type:keyboard {
   xkb_variant "dvorak,"
   xkb_options "caps:swapescape,grp:win_space_toggle"
 }
-
+bindsym $mod+F5 input type:keyboard xkb_variant us
 
 # set $darkred      #cc241d
 # set $red          #fb4934
@@ -111,7 +111,7 @@ bindsym $mod+Return exec $term
 # kill focused window
 bindsym $mod+Shift+apostrophe kill
 
-bindsym $mod+e exec rofi -show drun
+bindsym $mod+e exec rofi -show drun -sorting-method fzf
 bindsym $mod+TAB exec rofi -show window
 
 # focus follows mouse
@@ -269,6 +269,7 @@ exec swayidle -w \
        lock 'swaylock -f' \
        timeout 300 'swaylock -f' \
        timeout 300 'swaymsg "output * dpms off"' \
+       timeout 600 'systemctl suspend' \
        resume 'swaymsg "output * dpms on"' \
        before-sleep 'swaylock -f'
 for_window [class=".*"] inhibit_idle fullscreen
