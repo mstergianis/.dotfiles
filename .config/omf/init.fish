@@ -245,6 +245,8 @@ set -gx GBM_BACKEND nvidia-drm
 set -gx __GLX_VENDOR_LIBRARY_NAME nvidia
 set -gx ELECTRON_OZONE_PLATFORM_HINT auto
 
+set -gx SYSTEMD_EDITOR vim
+
 bass source "$HOME/.config/google-cloud-sdk/completion.bash.inc"
 
 if status --is-interactive
