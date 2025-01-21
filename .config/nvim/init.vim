@@ -43,6 +43,7 @@ nnoremap <silent> <leader>fw :Files ~/workspace<CR>
 nnoremap <silent> <leader>fed :e ~/.config/nvim/init.vim<CR>
 nnoremap <silent> <leader>fef :e ~/.config/omf/init.fish<CR>
 nnoremap <silent> <leader>fer :so ~/.config/nvim/init.vim<CR>
+nnoremap <silent> <leader>fec :Files ~/.config<CR>
 
 " window movements
 nnoremap <silent> <leader>wj :wincmd j<CR>

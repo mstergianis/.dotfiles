@@ -144,6 +144,7 @@ if status --is-interactive
     abbr -a -g gb 'git blame -w -C -C -C'
     abbr -a -g gpu 'git push -u origin (git rev-parse --abbrev-ref HEAD)'
     abbr -a -g gpf 'git push -u fork (git rev-parse --abbrev-ref HEAD)'
+    abbr -a -g grao 'git remote add origin git@github.com/mstergianis/'
 end
 
 alias vimdiff 'nvim -d'
