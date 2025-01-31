@@ -20,6 +20,7 @@ input type:keyboard {
   xkb_options "caps:swapescape,grp:win_space_toggle"
 }
 bindsym $mod+F5 input type:keyboard xkb_variant us
+bindsym $mod+F6 input type:keyboard xkb_variant "dvorak,"
 
 # set $darkred      #cc241d
 # set $red          #fb4934
