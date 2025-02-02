@@ -1,3 +1,6 @@
 [submodule ".config/waybar/themes/catppuccin"]
 	path = .config/waybar/themes/catppuccin
 	url = git@github.com:catppuccin/waybar.git
+[submodule ".tmux/plugins/tpm"]
+	path = .tmux/plugins/tpm
+	url = git@github.com:tmux-plugins/tpm
