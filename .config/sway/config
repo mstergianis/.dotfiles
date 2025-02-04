@@ -334,8 +334,8 @@ exec --no-startup-id solaar
 exec launch-waybar
 
 #exec --no-startup-id powerline-daemon -q
-bindsym $mod+x exec "scrot -pu ~/Pictures/Screenshots/Screenshot%Y-%m-%d:%H:%M:%S.png"
-bindsym $mod+Shift+x exec "scrot -p ~/Pictures/Screenshots/Screenshot%Y-%m-%d:%H:%M:%S.png"
+bindsym $mod+x exec "grimshot save output --cursor ~/Pictures/Screenshots/Screenshot-$(date +%Y-%m-%d-%H:%m:%S).png"
+bindsym $mod+Shift+x exec "grimshot save active --cursor ~/Pictures/Screenshots/Screenshot-$(date +%Y-%m-%d-%H:%m:%S).png"
 
 # emacs binding
 bindsym $mod+b exec --no-startup-id "emacsclient -c -a emacs"
