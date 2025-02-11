@@ -84,6 +84,9 @@ export EDITOR='nvim'
 set -gx GOPATH "$HOME/go"
 set -gx PATH $PATH "$GOPATH/bin"
 
+# rust
+set -gx PATH $PATH "$HOME/.cargo/bin"
+
 # local bin
 set -gx PATH $PATH "$HOME/.local/bin"
 set -gx PATH $PATH "$HOME/.local/bin/git-duet"
