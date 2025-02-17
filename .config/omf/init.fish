@@ -266,5 +266,5 @@ if status --is-interactive
 end
 
 if test -z $DISPLAY && test (tty) = /dev/tty1
-   WLR_RENDERER=vulkan sway --unsupported-gpu
+   XDG_CURRENT_DESKTOP=sway WLR_RENDERER=vulkan sway --unsupported-gpu
 end
