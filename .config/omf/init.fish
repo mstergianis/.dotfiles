@@ -251,6 +251,12 @@ set -gx ELECTRON_OZONE_PLATFORM_HINT auto
 
 set -gx SYSTEMD_EDITOR vim
 
+# pnpm
+set -gx PNPM_HOME "/home/michael/.local/share/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
+end
+
 bass source "$HOME/.config/google-cloud-sdk/completion.bash.inc"
 
 if status --is-interactive
