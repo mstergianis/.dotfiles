@@ -5,7 +5,8 @@
     "height": 34,
     "modules-left": [
         "custom/logo",
-        "sway/workspaces"
+        "sway/workspaces",
+        "sway/mode"
     ],
     "modules-center": [
         "clock"
@@ -28,7 +29,7 @@
         "tooltip-format": "{title}"
     },
     "sway/language": {
-	"format": " {long} ",
+	      "format": " {long} ",
     },
     "sway/workspaces": {
         "on-click": "activate",
