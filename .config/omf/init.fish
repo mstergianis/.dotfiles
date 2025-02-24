@@ -265,6 +265,8 @@ if status --is-interactive
     abbr -ag ds 'dotfiles st'
 end
 
+set -x DEBUGINFOD_URLS https://debuginfod.archlinux.org
+
 if test -z $DISPLAY && test (tty) = /dev/tty1
    XDG_CURRENT_DESKTOP=sway WLR_RENDERER=vulkan sway --unsupported-gpu
 end
