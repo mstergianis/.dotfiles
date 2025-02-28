@@ -265,6 +265,10 @@ if status --is-interactive
     abbr -ag ds 'dotfiles st'
 end
 
+if status --is-interactive
+    abbr -ag wake-display 'sudo chvt 1 && sleep 1 && swaymsg --socket /run/user/1000/sway-ipc.*.sock output \'*\' dpms on && exit'
+end
+
 set -x DEBUGINFOD_URLS https://debuginfod.archlinux.org
 
 if test -z $DISPLAY && test (tty) = /dev/tty1

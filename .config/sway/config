@@ -266,11 +266,13 @@ bindsym $mod+Shift+c exec ssh-add -D && loginctl lock-session && swayidle -w \
     timeout 1 'swaymsg "output * dpms off"' \
     resume 'swaymsg "output * dpms on"; pkill -nx swayidle'
 
+# https://github.com/swaywm/sway/issues/5903#issuecomment-749190827
 exec swayidle -w \
        lock 'swaylock -f' \
        timeout 300 'swaylock -f' \
        timeout 300 'swaymsg "output * dpms off"' \
-       timeout 600 'systemctl suspend' \
+       resume 'swaymsg "output * dpms on"' \
+       timeout 600 'swaymsg "output * dpms off" && systemctl suspend' \
        resume 'swaymsg "output * dpms on"' \
        before-sleep 'swaylock -f'
 for_window [class=".*"] inhibit_idle fullscreen
