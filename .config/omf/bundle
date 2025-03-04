@@ -4,6 +4,7 @@ package direnv
 package fasd
 package fish_logo
 package foreign-env
+package fzf
 package nvm
 theme batman
 theme bira
