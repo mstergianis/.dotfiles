@@ -837,11 +837,21 @@ This function is called at the very end of Spacemacs initialization."
    '(evil-want-Y-yank-to-eol nil)
    '(helm-completion-style 'emacs)
    '(hl-todo-keyword-faces
-     '(("TODO" . "#dc752f") ("NEXT" . "#dc752f") ("THEM" . "#2d9574")
-       ("PROG" . "#3a81c3") ("OKAY" . "#3a81c3") ("DONT" . "#f2241f")
-       ("FAIL" . "#f2241f") ("DONE" . "#42ae2c") ("NOTE" . "#b1951d")
-       ("KLUDGE" . "#b1951d") ("HACK" . "#b1951d") ("TEMP" . "#b1951d")
-       ("FIXME" . "#dc752f") ("XXX+" . "#dc752f") ("\\?\\?\\?+" . "#dc752f")))
+     '(("TODO" . "#dc752f")
+       ("NEXT" . "#dc752f")
+       ("THEM" . "#2d9574")
+       ("PROG" . "#3a81c3")
+       ("OKAY" . "#3a81c3")
+       ("DONT" . "#f2241f")
+       ("FAIL" . "#f2241f")
+       ("DONE" . "#42ae2c")
+       ("NOTE" . "#b1951d")
+       ("KLUDGE" . "#b1951d")
+       ("HACK" . "#b1951d")
+       ("TEMP" . "#b1951d")
+       ("FIXME" . "#dc752f")
+       ("XXX+" . "#dc752f")
+       ("\\?\\?\\?+" . "#dc752f")))
    '(ignored-local-variable-values '((rustic-indent-offset . 4)))
    '(lsp-biome-autofix-on-save t)
    '(lsp-biome-format-on-save t)
@@ -851,53 +861,23 @@ This function is called at the very end of Spacemacs initialization."
    '(lsp-eslint-package-manager "pnpm")
    '(magit-commit-show-diff t)
    '(markdown-code-lang-modes
-     '(("ocaml" . tuareg-mode) ("elisp" . emacs-lisp-mode) ("ditaa" . artist-mode)
-       ("asymptote" . asy-mode) ("dot" . fundamental-mode) ("sqlite" . sql-mode)
-       ("calc" . fundamental-mode) ("C" . c-mode) ("cpp" . c++-mode)
-       ("C++" . c++-mode) ("screen" . shell-script-mode) ("shell" . sh-mode)
-       ("bash" . sh-mode) ("tsx" . web-mode)))
+     '(("ocaml" . tuareg-mode)
+       ("elisp" . emacs-lisp-mode)
+       ("ditaa" . artist-mode)
+       ("asymptote" . asy-mode)
+       ("dot" . fundamental-mode)
+       ("sqlite" . sql-mode)
+       ("calc" . fundamental-mode)
+       ("C" . c-mode)
+       ("cpp" . c++-mode)
+       ("C++" . c++-mode)
+       ("screen" . shell-script-mode)
+       ("shell" . sh-mode)
+       ("bash" . sh-mode)
+       ("tsx" . web-mode)))
    '(org-agenda-files '("/home/michael/workspace/github.com/task-list"))
    '(package-selected-packages
-     '(zig-mode ellama llm plz-event-source plz-media-type plz gptel ein polymode
-                anaphora websocket cmake-mode helm-ctest adoc-mode toml-mode
-                ron-mode racer rust-mode flycheck-rust cargo rjsx-mode import-js
-                grizzl envrc sqlup-mode sql-indent csv-mode protobuf-mode xcscope
-                cython-mode company-anaconda blacken anaconda-mode pythonic
-                company-terraform terraform-mode hcl-mode gmail-message-mode
-                ham-mode html-to-markdown flymd edit-server vmd-mode tern
-                company-reftex company-auctex auctex-latexmk auctex dracula-theme
-                insert-shebang helm-gtags ggtags flycheck-bashate fish-mode
-                counsel-gtags counsel swiper ivy company-shell xterm-color vterm
-                terminal-here shell-pop multi-term eshell-z eshell-prompt-extras
-                esh-help package-safe-delete doom-themes dockerfile-mode docker
-                tablist docker-tramp yaml-mode go-playground tide typescript-mode
-                flycheck smeargle orgit org-projectile org-category-capture
-                org-present org-pomodoro alert log4e gntp org-mime org-download
-                magit-gitflow magit-popup htmlize helm-gitignore go-guru go-eldoc
-                go-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode
-                git-timemachine git-messenger git-link evil-magit magit transient
-                git-commit with-editor ws-butler winum which-key
-                volatile-highlights vi-tilde-fringe uuidgen use-package toc-org
-                spaceline powerline restart-emacs request rainbow-delimiters
-                popwin persp-mode pcre2el paradox spinner org-plus-contrib
-                org-bullets open-junk-file neotree move-text macrostep lorem-ipsum
-                linum-relative link-hint indent-guide hydra lv hungry-delete
-                hl-todo highlight-parentheses highlight-numbers parent-mode
-                highlight-indentation helm-themes helm-swoop helm-projectile
-                projectile pkg-info epl helm-mode-manager helm-make helm-flx
-                helm-descbinds helm-ag google-translate golden-ratio flx-ido flx
-                fill-column-indicator fancy-battery eyebrowse expand-region
-                exec-path-from-shell evil-visualstar evil-visual-mark-mode
-                evil-unimpaired evil-tutor evil-surround
-                evil-search-highlight-persist highlight evil-numbers
-                evil-nerd-commenter evil-mc evil-matchit evil-lisp-state
-                smartparens evil-indent-plus evil-iedit-state iedit evil-exchange
-                evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg
-                undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish
-                define-word column-enforce-mode clean-aindent-mode bind-map
-                bind-key auto-highlight-symbol auto-compile packed
-                aggressive-indent adaptive-wrap ace-window ace-link
-                ace-jump-helm-line helm avy helm-core popup async))
+     '(tree-sitter-langs tree-sitter tsc zig-mode ellama llm plz-event-source plz-media-type plz gptel ein polymode anaphora websocket cmake-mode helm-ctest adoc-mode toml-mode ron-mode racer rust-mode flycheck-rust cargo rjsx-mode import-js grizzl envrc sqlup-mode sql-indent csv-mode protobuf-mode xcscope cython-mode company-anaconda blacken anaconda-mode pythonic company-terraform terraform-mode hcl-mode gmail-message-mode ham-mode html-to-markdown flymd edit-server vmd-mode tern company-reftex company-auctex auctex-latexmk auctex dracula-theme insert-shebang helm-gtags ggtags flycheck-bashate fish-mode counsel-gtags counsel swiper ivy company-shell xterm-color vterm terminal-here shell-pop multi-term eshell-z eshell-prompt-extras esh-help package-safe-delete doom-themes dockerfile-mode docker tablist docker-tramp yaml-mode go-playground tide typescript-mode flycheck smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download magit-gitflow magit-popup htmlize helm-gitignore go-guru go-eldoc go-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit transient git-commit with-editor ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
    '(paradox-github-token t)
    '(prettier-js-args nil)
    '(prettier-js-show-errors 'buffer)
@@ -905,9 +885,13 @@ This function is called at the very end of Spacemacs initialization."
    '(safe-local-variable-values
      '((lsp-eslint-working-directories "./app/*")
        (eval add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]packages")
-       (typescript-backend . tide) (typescript-backend . lsp)
-       (javascript-backend . tide) (javascript-backend . tern)
-       (javascript-backend . lsp))))
+       (typescript-backend . tide)
+       (typescript-backend . lsp)
+       (javascript-backend . tide)
+       (javascript-backend . tern)
+       (javascript-backend . lsp)))
+   '(yas-snippet-dirs
+     '("/home/michael/.local/share/yasnippet" "/home/michael/.emacs.d/private/snippets/" "/home/michael/.emacs.d/layers/+completion/auto-completion/local/snippets" "/home/michael/.emacs.d/elpa/29.4/develop/haskell-snippets-20210228.344/snippets" yasnippet-snippets-dir)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
