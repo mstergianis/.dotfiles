@@ -881,6 +881,9 @@ This function is called at the very end of Spacemacs initialization."
    '(paradox-github-token t)
    '(prettier-js-args nil)
    '(prettier-js-show-errors 'buffer)
+   '(projectile-cache-file ".projectile-cache.eld")
+   '(projectile-enable-caching 'persistent)
+   '(projectile-git-use-fd t)
    '(rustic-format-trigger 'on-save)
    '(safe-local-variable-values
      '((lsp-eslint-working-directories "./app/*")
