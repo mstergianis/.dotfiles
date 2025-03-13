@@ -1,0 +1,15 @@
+# emacs backup files
+*~
+
+# tsserver dir
+.log/
+
+# .envrc
+.envrc
+
+*.md.temp
+
+.dir-locals.el
+
+# projectile cache files
+.projectile-cache.eld
