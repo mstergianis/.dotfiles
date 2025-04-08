@@ -266,10 +266,12 @@ if status --is-interactive
 end
 
 if status --is-interactive
-    abbr -ag wake-display 'sudo chvt 1 && sleep 1 && swaymsg --socket /run/user/1000/sway-ipc.*.sock output \'*\' dpms on && exit'
+    abbr -ag cdw 'cd ~/workspace/github.com/mstergianis'
 end
 
-set -x DEBUGINFOD_URLS https://debuginfod.archlinux.org
+set -gx RIPGREP_CONFIG_PATH $HOME/.config/ripgrep/config
+
+set -gx DEBUGINFOD_URLS https://debuginfod.archlinux.org
 
 if test -z $DISPLAY && test (tty) = /dev/tty1
    XDG_CURRENT_DESKTOP=sway WLR_RENDERER=vulkan sway --unsupported-gpu
