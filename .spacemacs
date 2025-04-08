@@ -32,8 +32,11 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(systemd
+   '(graphviz
+     systemd
      asciidoc
+     (llm-client :variables
+                 llm-client-enable-ellama t)
      rust
      cmake
      react
@@ -82,6 +85,7 @@ This function should only modify configuration layer settings."
                                   (">=" . ?≥)
                                   ("&&" . ?∧)
                                   ("||" . ?∨)))
+     haskell
      lsp
      html
      multiple-cursors
@@ -144,6 +148,7 @@ This function should only modify configuration layer settings."
                                       editorconfig
                                       (lsp-tailwindcss :location (recipe :fetcher github :repo "merrickluo/lsp-tailwindcss"))
                                       add-node-modules-path
+                                      evil-textobj-tree-sitter
                                       plantuml-mode
                                       pkgbuild-mode
                                       (lsp-biome :location (recipe :fetcher github :repo "cxa/lsp-biome"))
@@ -724,8 +729,9 @@ you should place your code here."
   (spacemacs/declare-prefix "o" "custom")
   (spacemacs/set-leader-keys "ot" 'term-here)
 
-  (spacemacs/set-leader-keys "/" 'helm-do-ag-project-root)
+  (spacemacs/set-leader-keys "/" #'spacemacs/helm-project-smart-do-search)
   (spacemacs/set-leader-keys "f/" 'helm-do-ag)
+  (spacemacs/set-leader-keys "fef" (lambda () (interactive) (switch-to-buffer (find-file-noselect "~/.config/omf/init.fish"))))
 
   ;; magit duet configuration
   (use-package dash)
@@ -742,11 +748,11 @@ you should place your code here."
       (magit-run-git-with-editor "duet-commit" args)))
 
   (defun magit-duet-duet (author committer)
-    (interactive "sWho the author?: \nsWho is the committer?: ")
+    (interactive "sWho is the author?: \nsWho is the committer?: ")
     (magit-run-git "duet" author committer))
 
   (defun magit-duet-solo (person)
-    (interactive "sWho the sole author?: ")
+    (interactive "sWho is the sole author?: ")
     (magit-run-git "solo" person))
 
   (defun magit-duet-commit-init ()
@@ -809,7 +815,24 @@ you should place your code here."
   (spacemacs/set-leader-keys "fg" (helm-find-dir-files "~/workspace/github.com/mstergianis/"))
 
   ;; buffer grep
-  (spacemacs/set-leader-keys "bg" #'spacemacs/helm-buffers-do-rg)
+  (spacemacs/set-leader-keys "b/" #'spacemacs/helm-buffers-do-rg)
+
+  (use-package evil-textobj-tree-sitter :ensure t)
+  (define-key evil-outer-text-objects-map "c" (evil-textobj-tree-sitter-get-textobj "comment.outer"))
+  (define-key evil-inner-text-objects-map "c" (evil-textobj-tree-sitter-get-textobj "comment.inner"))
+
+  (define-key evil-outer-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.outer"))
+  (define-key evil-inner-text-objects-map "f" (evil-textobj-tree-sitter-get-textobj "function.inner"))
+  (define-key evil-inner-text-objects-map "b" (evil-textobj-tree-sitter-get-textobj "block.inner"))
+  (define-key evil-outer-text-objects-map "b" (evil-textobj-tree-sitter-get-textobj "block.outer"))
+
+  (setq major-mode-remap-alist
+        '((go-mode . go-ts-mode)))
+  (setq treesit-language-source-alist
+        '((gomod "https://github.com/camdencheek/tree-sitter-go-mod")))
+
+  (dolist (h go-mode-local-vars-hook)
+    (add-hook 'go-ts-mode-hook h))
   )
 
 (defun customize-yaml-mode ()
@@ -837,21 +860,11 @@ This function is called at the very end of Spacemacs initialization."
    '(evil-want-Y-yank-to-eol nil)
    '(helm-completion-style 'emacs)
    '(hl-todo-keyword-faces
-     '(("TODO" . "#dc752f")
-       ("NEXT" . "#dc752f")
-       ("THEM" . "#2d9574")
-       ("PROG" . "#3a81c3")
-       ("OKAY" . "#3a81c3")
-       ("DONT" . "#f2241f")
-       ("FAIL" . "#f2241f")
-       ("DONE" . "#42ae2c")
-       ("NOTE" . "#b1951d")
-       ("KLUDGE" . "#b1951d")
-       ("HACK" . "#b1951d")
-       ("TEMP" . "#b1951d")
-       ("FIXME" . "#dc752f")
-       ("XXX+" . "#dc752f")
-       ("\\?\\?\\?+" . "#dc752f")))
+     '(("TODO" . "#dc752f") ("NEXT" . "#dc752f") ("THEM" . "#2d9574")
+       ("PROG" . "#3a81c3") ("OKAY" . "#3a81c3") ("DONT" . "#f2241f")
+       ("FAIL" . "#f2241f") ("DONE" . "#42ae2c") ("NOTE" . "#b1951d")
+       ("KLUDGE" . "#b1951d") ("HACK" . "#b1951d") ("TEMP" . "#b1951d")
+       ("FIXME" . "#dc752f") ("XXX+" . "#dc752f") ("\\?\\?\\?+" . "#dc752f")))
    '(ignored-local-variable-values '((rustic-indent-offset . 4)))
    '(lsp-biome-autofix-on-save t)
    '(lsp-biome-format-on-save t)
@@ -861,40 +874,84 @@ This function is called at the very end of Spacemacs initialization."
    '(lsp-eslint-package-manager "pnpm")
    '(magit-commit-show-diff t)
    '(markdown-code-lang-modes
-     '(("ocaml" . tuareg-mode)
-       ("elisp" . emacs-lisp-mode)
-       ("ditaa" . artist-mode)
-       ("asymptote" . asy-mode)
-       ("dot" . fundamental-mode)
-       ("sqlite" . sql-mode)
-       ("calc" . fundamental-mode)
-       ("C" . c-mode)
-       ("cpp" . c++-mode)
-       ("C++" . c++-mode)
-       ("screen" . shell-script-mode)
-       ("shell" . sh-mode)
-       ("bash" . sh-mode)
-       ("tsx" . web-mode)))
+     '(("ocaml" . tuareg-mode) ("elisp" . emacs-lisp-mode) ("ditaa" . artist-mode)
+       ("asymptote" . asy-mode) ("dot" . fundamental-mode) ("sqlite" . sql-mode)
+       ("calc" . fundamental-mode) ("C" . c-mode) ("cpp" . c++-mode)
+       ("C++" . c++-mode) ("screen" . shell-script-mode) ("shell" . sh-mode)
+       ("bash" . sh-mode) ("tsx" . web-mode)))
    '(org-agenda-files '("/home/michael/workspace/github.com/task-list"))
    '(package-selected-packages
-     '(tree-sitter-langs tree-sitter tsc zig-mode ellama llm plz-event-source plz-media-type plz gptel ein polymode anaphora websocket cmake-mode helm-ctest adoc-mode toml-mode ron-mode racer rust-mode flycheck-rust cargo rjsx-mode import-js grizzl envrc sqlup-mode sql-indent csv-mode protobuf-mode xcscope cython-mode company-anaconda blacken anaconda-mode pythonic company-terraform terraform-mode hcl-mode gmail-message-mode ham-mode html-to-markdown flymd edit-server vmd-mode tern company-reftex company-auctex auctex-latexmk auctex dracula-theme insert-shebang helm-gtags ggtags flycheck-bashate fish-mode counsel-gtags counsel swiper ivy company-shell xterm-color vterm terminal-here shell-pop multi-term eshell-z eshell-prompt-extras esh-help package-safe-delete doom-themes dockerfile-mode docker tablist docker-tramp yaml-mode go-playground tide typescript-mode flycheck smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download magit-gitflow magit-popup htmlize helm-gitignore go-guru go-eldoc go-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit transient git-commit with-editor ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+     '(ace-jump-helm-line ace-link ace-window adaptive-wrap adoc-mode
+                          aggressive-indent alert anaconda-mode anaphora anzu
+                          async auctex auctex-latexmk auto-compile
+                          auto-highlight-symbol avy bind-key bind-map blacken
+                          cargo clean-aindent-mode cmake-mode column-enforce-mode
+                          company-anaconda company-auctex company-reftex
+                          company-shell company-terraform counsel counsel-gtags
+                          csv-mode cython-mode dash define-word diminish docker
+                          docker-tramp dockerfile-mode doom-themes dracula-theme
+                          dumb-jump edit-server ein elisp-slime-nav ellama envrc
+                          epl esh-help eshell-prompt-extras eshell-z eval-sexp-fu
+                          evil evil-anzu evil-args evil-ediff evil-escape
+                          evil-exchange evil-iedit-state evil-indent-plus
+                          evil-lisp-state evil-magit evil-matchit evil-mc
+                          evil-nerd-commenter evil-numbers
+                          evil-search-highlight-persist evil-surround
+                          evil-textobj-tree-sitter evil-tutor evil-unimpaired
+                          evil-visual-mark-mode evil-visualstar
+                          exec-path-from-shell expand-region eyebrowse f
+                          fancy-battery fill-column-indicator fish-mode flx
+                          flx-ido flycheck flycheck-bashate flycheck-rust flymd
+                          ggtags git-commit git-link git-messenger git-timemachine
+                          gitattributes-mode gitconfig-mode gitignore-mode
+                          gmail-message-mode gntp gnuplot go-eldoc go-guru go-mode
+                          go-playground golden-ratio google-translate goto-chg
+                          gptel graphviz-dot-mode grizzl ham-mode hcl-mode helm
+                          helm-ag helm-core helm-ctest helm-descbinds helm-flx
+                          helm-gitignore helm-gtags helm-make helm-mode-manager
+                          helm-projectile helm-rg helm-swoop helm-themes highlight
+                          highlight-indentation highlight-numbers
+                          highlight-parentheses hl-todo html-to-markdown htmlize
+                          hungry-delete hydra iedit import-js indent-guide
+                          insert-shebang ivy link-hint linum-relative llm log4e
+                          lorem-ipsum lv macrostep magit magit-gitflow magit-popup
+                          move-text multi-term neotree open-junk-file org-bullets
+                          org-category-capture org-download org-mime
+                          org-plus-contrib org-pomodoro org-present org-projectile
+                          orgit package-safe-delete packed paradox parent-mode
+                          pcre2el persp-mode pkg-info plz plz-event-source
+                          plz-media-type polymode popup popwin powerline
+                          projectile protobuf-mode pythonic racer
+                          rainbow-delimiters request restart-emacs rjsx-mode
+                          ron-mode rust-mode s shell-pop smartparens smeargle
+                          spaceline spinner sql-indent sqlup-mode swiper tablist
+                          terminal-here tern terraform-mode tide toc-org toml-mode
+                          transient tree-sitter tree-sitter-langs tsc
+                          typescript-mode undo-tree use-package uuidgen
+                          vi-tilde-fringe vmd-mode volatile-highlights vterm
+                          websocket which-key winum with-editor ws-butler xcscope
+                          xterm-color yaml-mode zig-mode))
    '(paradox-github-token t)
    '(prettier-js-args nil)
    '(prettier-js-show-errors 'buffer)
    '(projectile-cache-file ".projectile-cache.eld")
    '(projectile-enable-caching 'persistent)
+   '(projectile-files-cache-expire 300)
    '(projectile-git-use-fd t)
    '(rustic-format-trigger 'on-save)
    '(safe-local-variable-values
      '((lsp-eslint-working-directories "./app/*")
        (eval add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]packages")
-       (typescript-backend . tide)
-       (typescript-backend . lsp)
-       (javascript-backend . tide)
-       (javascript-backend . tern)
+       (typescript-backend . tide) (typescript-backend . lsp)
+       (javascript-backend . tide) (javascript-backend . tern)
        (javascript-backend . lsp)))
+   '(spacemacs-keep-legacy-current-buffer-delete-bindings nil)
    '(yas-snippet-dirs
-     '("/home/michael/.local/share/yasnippet" "/home/michael/.emacs.d/private/snippets/" "/home/michael/.emacs.d/layers/+completion/auto-completion/local/snippets" "/home/michael/.emacs.d/elpa/29.4/develop/haskell-snippets-20210228.344/snippets" yasnippet-snippets-dir)))
+     '("/home/michael/.local/share/yasnippet"
+       "/home/michael/.emacs.d/private/snippets/"
+       "/home/michael/.emacs.d/layers/+completion/auto-completion/local/snippets"
+       "/home/michael/.emacs.d/elpa/29.4/develop/haskell-snippets-20210228.344/snippets"
+       yasnippet-snippets-dir)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
