@@ -722,9 +722,11 @@ you should place your code here."
   (defun term-here ()
     "Opens the alacritty terminal emulator in the current directory of the file you have open"
     (interactive)
-    (let ((emulator "alacritty"))
+    (let ((emulator "alacritty")
+          (file-name (cond ((eq major-mode 'dired-mode) dired-directory)
+                           ((not (eq buffer-file-name nil)) (file-name-directory buffer-file-name)))))
       (async-shell-command
-       (concat emulator " --working-directory " (file-name-directory buffer-file-name)))))
+       (concat emulator " --working-directory " file-name))))
 
   (spacemacs/declare-prefix "o" "custom")
   (spacemacs/set-leader-keys "ot" 'term-here)
