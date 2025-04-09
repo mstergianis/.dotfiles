@@ -37,7 +37,9 @@ This function should only modify configuration layer settings."
      asciidoc
      (llm-client :variables
                  llm-client-enable-ellama t)
-     rust
+     (rust :variables
+           lsp-enable-on-type-formatting nil
+           rust-mode-treesitter-derive t)
      cmake
      react
      sql
@@ -725,8 +727,10 @@ you should place your code here."
     (let ((emulator "alacritty")
           (file-name (cond ((eq major-mode 'dired-mode) dired-directory)
                            ((not (eq buffer-file-name nil)) (file-name-directory buffer-file-name)))))
-      (async-shell-command
-       (concat emulator " --working-directory " file-name))))
+      (start-process
+       "term-here"
+       "term-here-buffer"
+       emulator "--working-directory" file-name)))
 
   (spacemacs/declare-prefix "o" "custom")
   (spacemacs/set-leader-keys "ot" 'term-here)
@@ -860,7 +864,6 @@ This function is called at the very end of Spacemacs initialization."
    '(dap-print-io t)
    '(doom-one-brighter-comments t)
    '(evil-want-Y-yank-to-eol nil)
-   '(helm-completion-style 'emacs)
    '(hl-todo-keyword-faces
      '(("TODO" . "#dc752f") ("NEXT" . "#dc752f") ("THEM" . "#2d9574")
        ("PROG" . "#3a81c3") ("OKAY" . "#3a81c3") ("DONT" . "#f2241f")
