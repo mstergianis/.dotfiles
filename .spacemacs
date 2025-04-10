@@ -707,7 +707,6 @@ you should place your code here."
     (add-hook m #'electric-pair-local-mode)
     ;; (add-hook m #'configure-prettify-symbols-alist)
     )
-  (spacemacs/set-leader-keys "p/" #'projectile-grep)
   (setq prettify-symbols-unprettify-at-point t)
 
   (add-hook 'prog-mode-hook (lambda ()
@@ -732,17 +731,32 @@ you should place your code here."
        "term-here-buffer"
        emulator "--working-directory" file-name)))
 
-  (spacemacs/declare-prefix "o" "custom")
-  (spacemacs/set-leader-keys "ot" 'term-here)
-
-  (spacemacs/set-leader-keys "/" #'spacemacs/helm-project-smart-do-search)
-  (spacemacs/set-leader-keys "f/" 'helm-do-ag)
   (defun open-fish-config () (interactive) (switch-to-buffer (find-file-noselect "~/.config/omf/init.fish")))
   (spacemacs|spacebind
    :global
+   (("/" spacemacs/helm-project-smart-do-search "Search project"))
+
+   (("b" "Buffers"
+     ("/" spacemacs/helm-buffers-do-rg "Search buffers")))
+
+   (("a" "applications"
+     ("o" "org"
+      ("h" helm-open-task-list "Task list dir"))))
+
+   (("g" "git/versions-control"
+     ("n" diff-hl-next-hunk "Next hunk")
+     ("p" diff-hl-previous-hunk "Prev hunk")))
+
    (("f" "Files"
+     ("w" (helm-find-dir-files "~/workspace/") "Open workspace dir")
+     ("g" (helm-find-dir-files "~/workspace/github.com/mstergianis/") "Open mstergianis dir")
+     ("/" helm-do-ag "Search in a file")
      ("e" "Emacs/Spacemacs"
-      ("f" open-fish-config "Open fish dotfile")))))
+      ("f" open-fish-config "Open fish dotfile"))))
+
+   (("o" "User Custom Commands"
+     ("t" term-here "term in cwd"))))
+
   ;; magit duet configuration
   (use-package dash)
   (use-package magit)
@@ -807,25 +821,15 @@ you should place your code here."
 
   (defun helm-open-task-list ()
     (interactive)
+    (use-package helm)
     (helm-find-files-1 (file-name-directory (car (org-agenda-files)))))
-  (spacemacs/set-leader-keys "aoh" 'helm-open-task-list)
-
-  (spacemacs/set-leader-keys "gn" #'diff-hl-next-hunk)
-  (spacemacs/set-leader-keys "gp" #'diff-hl-previous-hunk)
-
-  (spacemacs/set-leader-keys "gH." #'diff-hl-show-hunk)
-  (spacemacs/set-leader-keys "gHn" #'diff-hl-show-hunk-next)
-  (spacemacs/set-leader-keys "gHp" #'diff-hl-show-hunk-previous)
 
   (defun helm-find-dir-files (dir)
     (lambda ()
       (interactive)
       (helm-find-files-1 dir)))
-  (spacemacs/set-leader-keys "fw" (helm-find-dir-files "~/workspace/"))
-  (spacemacs/set-leader-keys "fg" (helm-find-dir-files "~/workspace/github.com/mstergianis/"))
 
   ;; buffer grep
-  (spacemacs/set-leader-keys "b/" #'spacemacs/helm-buffers-do-rg)
 
   (use-package evil-textobj-tree-sitter :ensure t)
   (define-key evil-outer-text-objects-map "c" (evil-textobj-tree-sitter-get-textobj "comment.outer"))
