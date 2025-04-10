@@ -737,8 +737,12 @@ you should place your code here."
 
   (spacemacs/set-leader-keys "/" #'spacemacs/helm-project-smart-do-search)
   (spacemacs/set-leader-keys "f/" 'helm-do-ag)
-  (spacemacs/set-leader-keys "fef" (lambda () (interactive) (switch-to-buffer (find-file-noselect "~/.config/omf/init.fish"))))
-
+  (defun open-fish-config () (interactive) (switch-to-buffer (find-file-noselect "~/.config/omf/init.fish")))
+  (spacemacs|spacebind
+   :global
+   (("f" "Files"
+     ("e" "Emacs/Spacemacs"
+      ("f" open-fish-config "Open fish dotfile")))))
   ;; magit duet configuration
   (use-package dash)
   (use-package magit)
