@@ -109,6 +109,11 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec $term
 
+# copy links to clipboard
+bindsym $mod+Shift+y+l exec copy-link linkedin
+bindsym $mod+Shift+y+g exec copy-link github
+bindsym $mod+Shift+y+p exec copy-link portfolio
+
 # kill focused window
 bindsym $mod+Shift+apostrophe kill
 

@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -euo pipefail
+
+function usage {
+	progname="$(basename $0)"
+	echo "usage: $progname <github|linkedin|portfolio>"
+	echo "$progname copies the link specified by its key onto the clipboard"
+	exit 1
+}
+
+function copyLink {
+	echo "$1" | wl-copy -n
+}
+
+function main {
+	case "$1" in
+	github)
+		copyLink "https://github.com/mstergianis"
+		;;
+	portfolio)
+		copyLink "https://michael.stergianis.ca"
+		;;
+	linkedin)
+		copyLink "https://www.linkedin.com/in/michael-stergianis/"
+		;;
+	*)
+		usage
+		;;
+	esac
+}
+
+main "$@"
