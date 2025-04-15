@@ -280,8 +280,11 @@ exec swayidle -w \
        timeout 600 'swaymsg "output * dpms on" && sleep 1 && systemctl suspend' \
        resume 'swaymsg "output * dpms on"' \
        before-sleep 'swaylock -f'
+
+# idle inhibiting
 for_window [class=".*"] inhibit_idle fullscreen
 for_window [app_id=".*"] inhibit_idle fullscreen
+for_window [app_id="google-chrome" title="- YouTube -"] inhibit_idle focus
 
 # open a chrome window
 bindsym $mod+w exec brave
