@@ -732,6 +732,15 @@ you should place your code here."
        emulator "--working-directory" file-name)))
 
   (defun open-fish-config () (interactive) (switch-to-buffer (find-file-noselect "~/.config/omf/init.fish")))
+
+  (defmacro defun-helm-find-dir (name dir)
+    `(defun ,name ()
+       (interactive)
+       (use-package helm)
+       (helm-find-files-1 ,dir)))
+  (defun-helm-find-dir helm-find-workspace "~/workspace/")
+  (defun-helm-find-dir helm-find-github "~/workspace/github.com/mstergianis/")
+
   (spacemacs|spacebind
    :global
    (("/" spacemacs/helm-project-smart-do-search "Search project"))
@@ -748,8 +757,8 @@ you should place your code here."
      ("p" diff-hl-previous-hunk "Prev hunk")))
 
    (("f" "Files"
-     ("w" (helm-find-dir-files "~/workspace/") "Open workspace dir")
-     ("g" (helm-find-dir-files "~/workspace/github.com/mstergianis/") "Open mstergianis dir")
+     ("w" helm-find-workspace "Open workspace dir")
+     ("g" helm-find-github "Open mstergianis dir")
      ("/" helm-do-ag "Search in a file")
      ("e" "Emacs/Spacemacs"
       ("f" open-fish-config "Open fish dotfile"))))
@@ -803,10 +812,12 @@ you should place your code here."
   (add-to-list 'auto-mode-alist '("\\.star\\'" . python-mode))
 
   ;; move 3 lines with C-e and C-y
-  (evil-define-key nil evil-normal-state-map (kbd "C-e") #'(lambda () (interactive) (evil-scroll-line-down 3)))
-  (evil-define-key nil evil-motion-state-map (kbd "C-e") #'(lambda () (interactive) (evil-scroll-line-down 3)))
-  (evil-define-key nil evil-normal-state-map (kbd "C-y") #'(lambda () (interactive) (evil-scroll-line-up 3)))
-  (evil-define-key nil evil-motion-state-map (kbd "C-y") #'(lambda () (interactive) (evil-scroll-line-up 3)))
+  (defmacro evil-remap (map key redef)
+    `(evil-define-key nil ,map (kbd ,key) #'(lambda () (interactive) ,redef)))
+  (evil-remap evil-normal-state-map "C-e" (evil-scroll-line-down 3))
+  (evil-remap evil-motion-state-map "C-e" (evil-scroll-line-down 3))
+  (evil-remap evil-normal-state-map "C-y" (evil-scroll-line-up 3))
+  (evil-remap evil-motion-state-map "C-y" (evil-scroll-line-up 3))
 
   ;; yaml
   (customize-yaml-mode)
@@ -824,10 +835,6 @@ you should place your code here."
     (use-package helm)
     (helm-find-files-1 (file-name-directory (car (org-agenda-files)))))
 
-  (defun helm-find-dir-files (dir)
-    (lambda ()
-      (interactive)
-      (helm-find-files-1 dir)))
 
   ;; buffer grep
 
@@ -840,13 +847,13 @@ you should place your code here."
   (define-key evil-inner-text-objects-map "b" (evil-textobj-tree-sitter-get-textobj "block.inner"))
   (define-key evil-outer-text-objects-map "b" (evil-textobj-tree-sitter-get-textobj "block.outer"))
 
-  (setq major-mode-remap-alist
-        '((go-mode . go-ts-mode)))
-  (setq treesit-language-source-alist
-        '((gomod "https://github.com/camdencheek/tree-sitter-go-mod")))
+  ;; (setq major-mode-remap-alist
+  ;;       '((go-mode . go-ts-mode)))
+  ;; (setq treesit-language-source-alist
+  ;;       '((gomod "https://github.com/camdencheek/tree-sitter-go-mod")))
 
-  (dolist (h go-mode-local-vars-hook)
-    (add-hook 'go-ts-mode-hook h))
+  ;; (dolist (h go-mode-local-vars-hook)
+  ;;   (add-hook 'go-ts-mode-hook h))
   )
 
 (defun customize-yaml-mode ()
