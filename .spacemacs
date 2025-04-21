@@ -32,7 +32,9 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(graphviz
+   '(clojure
+     graphviz
+     common-lisp
      systemd
      asciidoc
      (llm-client :variables
@@ -847,6 +849,38 @@ you should place your code here."
   (define-key evil-inner-text-objects-map "b" (evil-textobj-tree-sitter-get-textobj "block.inner"))
   (define-key evil-outer-text-objects-map "b" (evil-textobj-tree-sitter-get-textobj "block.outer"))
 
+  (defun slime-bounds-of-last-sexp ()
+    (cons
+     (save-excursion (backward-sexp) (point))
+     (point)))
+
+  (defun slime-macroexpand-all-last-expression ()
+    "Substitute the sexp at point with its macroexpansion.
+
+NB: Does not affect slime-eval-macroexpand-expression"
+    (interactive)
+    (let* ((bounds (or (slime-bounds-of-last-sexp)
+                       (user-error "No sexp at point"))))
+      (let* ((start (copy-marker (car bounds)))
+             (end (copy-marker (cdr bounds)))
+             (point (point))
+             (buffer (current-buffer)))
+        (slime-eval-async
+            `(swank:swank-macroexpand-all ,(buffer-substring-no-properties start end))
+          (lambda (expansion)
+            (with-current-buffer buffer
+              (let ((buffer-read-only nil))
+                (when (fboundp 'slime-remove-edits)
+                  (slime-remove-edits (point-min) (point-max)))
+                (slime-insert-indented expansion)
+                (insert "\n"))))))))
+
+  (spacemacs/toggle-evil-safe-lisp-structural-editing-on)
+  (spacemacs/set-leader-keys-for-major-mode 'lisp-mode "mep" 'slime-eval-print-last-expression)
+  (use-package slime
+    :bind (:map slime-mode-map
+                ("C-c M-m" . slime-macroexpand-all-last-expression)
+                ("C-j" . slime-eval-print-last-expression)))
   ;; (setq major-mode-remap-alist
   ;;       '((go-mode . go-ts-mode)))
   ;; (setq treesit-language-source-alist
@@ -905,7 +939,9 @@ This function is called at the very end of Spacemacs initialization."
                           aggressive-indent alert anaconda-mode anaphora anzu
                           async auctex auctex-latexmk auto-compile
                           auto-highlight-symbol avy bind-key bind-map blacken
-                          cargo clean-aindent-mode cmake-mode column-enforce-mode
+                          cargo cider cider-eval-sexp-fu clean-aindent-mode
+                          clojure-mode clojure-snippets cmake-mode
+                          column-enforce-mode common-lisp-snippets
                           company-anaconda company-auctex company-reftex
                           company-shell company-terraform counsel counsel-gtags
                           csv-mode cython-mode dash define-word diminish docker
@@ -927,23 +963,24 @@ This function is called at the very end of Spacemacs initialization."
                           gmail-message-mode gntp gnuplot go-eldoc go-guru go-mode
                           go-playground golden-ratio google-translate goto-chg
                           gptel graphviz-dot-mode grizzl ham-mode hcl-mode helm
-                          helm-ag helm-core helm-ctest helm-descbinds helm-flx
-                          helm-gitignore helm-gtags helm-make helm-mode-manager
-                          helm-projectile helm-rg helm-swoop helm-themes highlight
-                          highlight-indentation highlight-numbers
-                          highlight-parentheses hl-todo html-to-markdown htmlize
-                          hungry-delete hydra iedit import-js indent-guide
-                          insert-shebang ivy link-hint linum-relative llm log4e
-                          lorem-ipsum lv macrostep magit magit-gitflow magit-popup
-                          move-text multi-term neotree open-junk-file org-bullets
-                          org-category-capture org-download org-mime
-                          org-plus-contrib org-pomodoro org-present org-projectile
-                          orgit package-safe-delete packed paradox parent-mode
-                          pcre2el persp-mode pkg-info plz plz-event-source
-                          plz-media-type polymode popup popwin powerline
-                          projectile protobuf-mode pythonic racer
-                          rainbow-delimiters request restart-emacs rjsx-mode
-                          ron-mode rust-mode s shell-pop smartparens smeargle
+                          helm-ag helm-cider helm-core helm-ctest helm-descbinds
+                          helm-flx helm-gitignore helm-gtags helm-make
+                          helm-mode-manager helm-projectile helm-rg helm-swoop
+                          helm-themes highlight highlight-indentation
+                          highlight-numbers highlight-parentheses hl-todo
+                          html-to-markdown htmlize hungry-delete hydra iedit
+                          import-js indent-guide insert-shebang ivy link-hint
+                          linum-relative llm log4e lorem-ipsum lv macrostep magit
+                          magit-gitflow magit-popup move-text multi-term neotree
+                          open-junk-file org-bullets org-category-capture
+                          org-download org-mime org-plus-contrib org-pomodoro
+                          org-present org-projectile orgit package-safe-delete
+                          packed paradox parent-mode parseclj parseedn pcre2el
+                          persp-mode pkg-info plz plz-event-source plz-media-type
+                          polymode popup popwin powerline projectile protobuf-mode
+                          pythonic queue racer rainbow-delimiters request
+                          restart-emacs rjsx-mode ron-mode rust-mode s sesman
+                          shell-pop slime slime-company smartparens smeargle
                           spaceline spinner sql-indent sqlup-mode swiper tablist
                           terminal-here tern terraform-mode tide toc-org toml-mode
                           transient tree-sitter tree-sitter-langs tsc
