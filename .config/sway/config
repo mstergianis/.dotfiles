@@ -355,6 +355,9 @@ exec_always --no-startup-id picom --config ~/.config/i3/picom.conf
 # floating gnome-calculator
 for_window [app_id="org.gnome.Calculator"] floating enable
 
+# for_window [app_id="mpv"] floating enable
+# assign [app_id="mpv"] 8
+
 bindsym $mod+F1 exec brightness 0
 bindsym $mod+F2 exec brightness 35
 
